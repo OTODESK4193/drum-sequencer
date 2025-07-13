@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ドラムシーケンサー Ver2.6</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>ドラムシーケンサー Ver2.6</h1>
+    <p>自由にリズムを構築しよう！</p>
+
+    <div class="top-controls">
+        <div class="control-group">
+            <label for="tempoInput">テンポ (BPM):</label>
+            <input type="number" id="tempoInput" value="120" min="40" max="240" class="control-input">
+        </div>
+        <div class="control-group">
+            <label>テンポモード:</label>
+            <div class="tempo-mode-selector">
+                <label><input type="radio" name="tempoMode" value="quarter" checked> 4分音符</label>
+                <label><input type="radio" name="tempoMode" value="shuffle"> シャッフル</label>
+                <label><input type="radio" name="tempoMode" value="16th"> 16ビート</label>
+            </div>
+        </div>
+        <div class="control-group">
+            <button id="playPauseButton" class="control-button play">再生</button>
+            <button id="clearButton" class="control-button">全ステップクリア</button>
+            <button id="deleteAllTracksButton" class="control-button delete">全トラック削除</button>
+        </div>
+    </div>
+
+    <div class="sequencer-display-area">
+        <div id="screenshotPatternNameDisplay" class="screenshot-pattern-name-display">パターン名: (なし) (120 BPM) (4分音符)</div>
+        <div id="gridContainer" class="grid-container">
+            </div>
+    </div>
+
+    <div class="bottom-controls">
+        <div class="add-track-controls">
+            <input type="text" id="newInstrumentNameInput" placeholder="新しい楽器名" class="control-input">
+            <input type="color" id="newInstrumentColorPicker" value="#e74c3c" class="color-picker">
+            <button id="addTrackButton" class="control-button">トラックを追加</button>
+        </div>
+
+        <div class="preset-controls">
+            <div class="preset-input-group">
+                <input type="text" id="genreNameInput" placeholder="ジャンル名" class="control-input">
+            </div>
+            <div class="preset-save-group">
+                <input type="text" id="savePresetNameInput" placeholder="プリセット名を保存" class="control-input">
+                <button id="savePresetButton" class="control-button">プリセット保存</button>
+            </div>
+            <div class="preset-load-group">
+                <select id="presetSelector" class="control-input">
+                    <option value="">プリセットを選択...</option>
+                </select>
+                <button id="loadPresetButton" class="control-button">プリセット読み込み</button>
+                <button id="deletePresetButton" class="control-button delete">プリセット削除</button>
+            </div>
+        </div>
+
+        <div class="screenshot-control">
+            <button id="screenshotButton" class="control-button">スクリーンショット</button>
+            <button id="midiExportButton" class="control-button">MIDIエクスポート</button>
+        </div>
+    </div>
+
+    <div class="footer-info">
+        <h2>開発者について</h2>
+        <ul>
+            <li>X（旧Twitter）: <a href="https://x.com/kijyoumusic" target="_blank">@kijyoumusic</a></li>
+            <li>Youtube: <a href="https://www.youtube.com/@机上の音楽" target="_blank">YouTubeチャンネル</a></li>
+        </ul>
+
+        <h2>注意事項</h2>
+        <ul>
+            <li>テンポモードの「シャッフル」・「16ビート」については開発中のものになりますので、挙動にクセがあります。</li>
+            <li>トラック名をクリックすれば独自のサンプルを扱うことが可能です。</li>
+            <li>保存したプリセットは、ローカルに保存されるので、再起動時やキャッシュクリア時は消去されます。</li>
+            <li>MIDIエクスポートは、お使いDAWによっては、D＆Dできない場合があります。</li>
+            <li>全くの素人がAIを使って作ったツールです。改善要望等は受け付けておりません。</li>
+            <li>トラックは最大で8トラックまで追加することが可能</li>
+        </ul>
+    </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

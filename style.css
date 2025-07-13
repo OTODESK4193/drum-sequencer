@@ -1,0 +1,389 @@
+/* style.css */
+
+/* 基本リセット */
+body, h1, p, div, button, input, select, label {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #282c34; /* ダーク系の背景 */
+    color: #e0e0e0; /* 明るいテキストカラー */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 中央寄せ */
+    padding: 20px;
+    min-height: 100vh; /* 最小高さをビューポートの高さに設定 */
+}
+
+h1 {
+    color: #61dafb; /* 目を引くタイトルカラー */
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    color: #bbbbbb;
+}
+
+.top-controls,
+.bottom-controls {
+    display: flex;
+    justify-content: center; /* 中央寄せ */
+    align-items: center;
+    gap: 20px; /* 要素間のスペース */
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* 小さい画面で折り返す */
+}
+
+.control-group,
+.add-track-controls,
+.preset-controls,
+.screenshot-control {
+    background-color: #3a3f47; /* コントロールグループの背景 */
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ★★★ 追加・変更部分 ★★★ */
+.screenshot-control {
+    flex-direction: column; /* ボタンを縦に並べる */
+    align-items: stretch; /* ボタンの幅を揃える */
+}
+
+/* 個々のボタン間の隙間を追加 */
+.screenshot-control button {
+    margin-bottom: 10px; /* ボタン間の下マージン */
+}
+
+/* 最後のボタンにはマージンを適用しない */
+.screenshot-control button:last-child {
+    margin-bottom: 0;
+}
+/* ★★★ 追加・変更部分 ここまで ★★★ */
+
+
+.control-input,
+.control-button,
+.color-picker {
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    background-color: #4a4f58; /* 入力・ボタンの背景 */
+    color: #e0e0e0;
+    font-size: 1em;
+    transition: all 0.2s ease;
+}
+
+.control-input:focus {
+    outline: none;
+    border-color: #61dafb;
+    box-shadow: 0 0 0 2px rgba(97, 218, 251, 0.5);
+}
+
+.control-button {
+    cursor: pointer;
+    background-color: #007bff; /* 青系のボタン */
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+.control-button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.control-button.play {
+    background-color: #28a745; /* 緑系の再生ボタン */
+    border-color: #28a745;
+}
+
+.control-button.play:hover {
+    background-color: #218838;
+}
+
+.control-button.playing {
+    background-color: #ffc107; /* 再生中は黄色 */
+    border-color: #ffc107;
+    color: #333;
+}
+
+.control-button.delete {
+    background-color: #dc3545; /* 赤系の削除ボタン */
+    border-color: #dc3545;
+}
+
+.control-button.delete:hover {
+    background-color: #c82333;
+}
+
+.color-picker {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 40px; /* 小さめに */
+    height: 34px; /* inputと高さを合わせる */
+    border: none;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+.color-picker::-webkit-color-swatch {
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+
+.color-picker::-moz-color-swatch-wrapper {
+    padding: 0;
+}
+
+.color-picker::-moz-color-swatch {
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+
+/* 主要な修正点: シーケンサー表示エリアとグリッドコンテナの幅と中央寄せ */
+.sequencer-display-area {
+    background-color: #3a3f47; /* グリッド表示エリアの背景 */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    overflow-x: auto; /* 必要に応じて横スクロール */
+    max-width: 100%; /* 親要素に合わせる */
+}
+
+.screenshot-pattern-name-display {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #e0e0e0;
+}
+
+.grid-container {
+    display: grid;
+    /* grid-template-columnsはJSで動的に設定されます */
+    gap: 4px; /* グリッド間の隙間 */
+    background-color: #3a3f47; /* グリッドの背景 */
+    border-radius: 5px;
+    padding: 5px;
+    margin: 0 auto; /* 中央寄せ */
+    white-space: nowrap; /* ステップが折り返さないように */
+    overflow: visible; /* これ重要：html2canvasでキャプチャする際、はみ出しを許容 */
+}
+
+.instrument-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    background-color: #4a4f58;
+    border-radius: 4px;
+    position: relative; /* ボリュームスライダー配置のため */
+    width: 90px; /* 固定幅 */
+}
+
+.instrument-label {
+    width: 100%;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 0.85em;
+    white-space: nowrap; /* テキストが折り返さないように */
+    overflow: hidden; /* はみ出たテキストは非表示 */
+    text-overflow: ellipsis; /* はみ出たテキストは...で表示 */
+    margin-bottom: 5px;
+}
+
+.volume-control-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.volume-knob {
+    -webkit-appearance: none;
+    width: 80%;
+    height: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 5px;
+}
+
+.volume-knob:hover {
+    opacity: 1;
+}
+
+.volume-knob::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #61dafb;
+    cursor: pointer;
+}
+
+.volume-knob::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: #61dafb;
+    cursor: pointer;
+}
+
+.step {
+    width: 28px; /* ステップの幅 */
+    height: 28px; /* ステップの高さ */
+    background-color: #ecf0e1; /* 非アクティブ時の色 */
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.1s ease, border 0.1s ease;
+    border: 1px solid #bdc3c7; /* デフォルトのボーダー */
+}
+
+.step.active {
+    /* JavaScriptでbackgroundColorとborderが設定される */
+    border: 2px solid #FFFFFF; /* アクティブ時の白いボーダー */
+}
+
+.step.current-step {
+    box-shadow: 0 0 0 3px #ff0; /* 現在再生中のステップ */
+    border: 2px solid #ff0 !important; /* アクティブなステップの色と区別 */
+}
+
+/* プリセットコントロール内のレイアウト */
+.preset-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.preset-input-group,
+.preset-save-group,
+.preset-load-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap; /* 小さい画面で折り返す */
+}
+
+/* テンポモードセレクターのスタイル */
+.tempo-mode-selector {
+    display: flex;
+    gap: 15px; /* ラジオボタン間のスペース */
+    flex-wrap: wrap; /* 小さい画面で折り返す */
+}
+
+.tempo-mode-selector label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    color: #e0e0e0; /* テキスト色 */
+}
+
+.tempo-mode-selector input[type="radio"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #61dafb; /* チェックボックスの枠線色 */
+    border-radius: 50%; /* 丸くする */
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    top: 1px; /* 微調整 */
+}
+
+.tempo-mode-selector input[type="radio"]:checked {
+    background-color: #61dafb; /* チェックされた時の背景色 */
+    border-color: #61dafb;
+}
+
+/* チェックマークの擬似要素（任意） */
+.tempo-mode-selector input[type="radio"]:checked::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: #282c34; /* チェックマークの色 */
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* スマホなど小さい画面での調整 */
+@media (max-width: 768px) {
+    .top-controls,
+    .bottom-controls {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .control-group,
+    .add-track-controls,
+    .preset-controls,
+    .screenshot-control { /* ここも忘れずに */
+        width: 100%;
+        justify-content: center;
+    }
+
+    .preset-controls {
+        align-items: flex-start;
+    }
+
+    .preset-input-group,
+    .preset-save-group,
+    .preset-load-group {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .control-input {
+        width: calc(100% - 120px); /* ボタンの幅を考慮 */
+    }
+}
+
+@media (max-width: 480px) {
+    .control-input {
+        width: 100%; /* さらに狭い画面では100%に */
+        margin-bottom: 5px;
+    }
+    .control-button {
+        width: 100%;
+    }
+    .color-picker {
+        width: 100%;
+        height: 40px;
+    }
+    .tempo-mode-selector {
+        flex-direction: column; /* 狭い画面では縦に並べる */
+        gap: 8px;
+    }
+}
